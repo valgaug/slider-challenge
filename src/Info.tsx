@@ -1,24 +1,19 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 
 export function Info() {
   return (
     <Fragment>
       <p>
-        Fork this sandbox and create a React Typescript component to work as a{" "}
-        <br />
-        <strong>precision slider</strong> control with customisable minimum,
-        maximum and step value properties.
+        Fork this sandbox and create a React Typescript component to work as a <br />
+        <strong>precision slider</strong> control with customisable minimum, maximum and step value properties.
       </p>
 
       <ul>
         <li>
-          It should be built <em>without</em> using the HTML input element or
-          any additional third party libraries.
+          It should be built <em>without</em> using the HTML input element or any additional third party libraries.
         </li>
 
-        <li>
-          It should have basic state management to store the control values.
-        </li>
+        <li>It should have basic state management to store the control values.</li>
 
         <li>
           The component props interface should be:
@@ -42,19 +37,11 @@ export function Info() {
           0-100 % integer range, and <br />
           0-1 proportional control.
           <br />
-          <img
-            src="/sliders.png"
-            width="340"
-            height="140"
-            alt="Slider mockup"
-          />
+          <img src='/sliders.png' width='340' height='140' alt='Slider mockup' />
         </li>
 
         <li>The little details count and pay attention to user experience</li>
-        <li>
-          Think about what additional features a production quality slider might
-          also need
-        </li>
+        <li>Think about what additional features a production quality slider might also need</li>
         <li>Share the link to your forked sandbox once complete</li>
       </ul>
     </Fragment>
