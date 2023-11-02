@@ -5,8 +5,8 @@ import { Slider } from './Slider';
 import { useState } from 'react';
 
 export default function App() {
-  const [valuePercent, setValuePercent] = useState(50);
-  const [valueProportional, setValueProportional] = useState(0.5);
+  const [valuePercent, setValuePercent] = useState(100);
+  const [valueProportional, setValueProportional] = useState(1.0);
 
   return (
     <div className='App'>

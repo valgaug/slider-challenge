@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import './slider.css';
 
 interface Props {
@@ -37,13 +37,24 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
   // const handleMouseUp = () => {
   //   setIsDraggingRef(false);
   // };
+  const [thumbWidth, setThumbWidth] = useState(0);
+  const [trackWidth, setTrackWidth] = useState(0);
+  const sliderThumbRef = React.createRef<HTMLDivElement>();
+  const sliderTrackRef = React.createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (sliderThumbRef.current && sliderTrackRef.current) {
+      setThumbWidth(sliderThumbRef.current.getBoundingClientRect().width);
+      setTrackWidth(sliderTrackRef.current.getBoundingClientRect().width);
+    }
+  }, []);
 
   return (
     <div className='slider'>
       <label>{label}</label>
       <div
         className='slider-container'
-        // ref={sliderRef}
+        ref={sliderTrackRef}
         // onMouseDown={handleMouseDown}
         // onMouseMove={handleMouseMove}
         // onMouseUp={handleMouseUp}
@@ -51,9 +62,10 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
         <div className='slider-track'>
           <div
             className='slider-thumb'
-            // style={{
-            //   left: `${((sliderValue - min) / (max - min)) * 100}%`,
-            // }}
+            ref={sliderThumbRef}
+            style={{
+              left: `${((value - min) / (max - min + value * (thumbWidth / (trackWidth - thumbWidth)))) * 100}%`,
+            }}
           >
             <div className='slider-value'>
               <span>
