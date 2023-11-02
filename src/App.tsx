@@ -17,7 +17,7 @@ export default function App() {
       <p>INTERACTIVE SLIDERS TO GO HERE</p>
       <Slider label='Percentage Label' max={100} min={0} step={1} value={valuePercent} unit='%' onChange={setValuePercent} />
       <br />
-      <Slider label='Proportional Label' max={1} min={0} step={0.1} value={valueProportional} unit='%' onChange={setValueProportional} />
+      <Slider label='Proportional Label' max={1} min={0} step={0.1} value={valueProportional} onChange={setValueProportional} />
     </div>
   );
 }
