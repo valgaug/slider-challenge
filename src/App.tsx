@@ -5,8 +5,8 @@ import { Slider } from './Slider';
 import { useState } from 'react';
 
 export default function App() {
-  const [valuePercent, setValuePercent] = useState(100);
-  const [valueProportional, setValueProportional] = useState(1.0);
+  const [valuePercent, setValuePercent] = useState(70);
+  const [valueProportional, setValueProportional] = useState(0.7);
 
   return (
     <div className='App'>
@@ -15,9 +15,9 @@ export default function App() {
       <hr />
 
       <p>INTERACTIVE SLIDERS TO GO HERE</p>
-      <Slider label='Percentage Label' max={100} min={0} step={1} value={valuePercent} unit='%' onChange={setValuePercent} />
+      <Slider label='Percentage Label' max={70} min={30} step={1} value={valuePercent} unit='%' onChange={setValuePercent} />
       <br />
-      <Slider label='Proportional Label' max={1} min={0} step={0.1} value={valueProportional} onChange={setValueProportional} />
+      <Slider label='Proportional Label' max={0.7} min={0.3} step={0.1} value={valueProportional} onChange={setValueProportional} />
     </div>
   );
 }

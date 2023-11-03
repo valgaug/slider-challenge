@@ -14,16 +14,6 @@ interface Props {
 export function Slider({ label, max, min, step, value, unit, onChange }: Props): ReactElement {
   // const [sliderValue, setSliderValue] = useState(value);
   // const sliderRef = React.createRef<HTMLDivElement>();
-  // const [isDraggingRef, setIsDraggingRef] = useState(false);
-
-  // const handleMouseDown = (e: React.MouseEvent) => {
-  //   if (sliderRef.current) {
-  //     const rect = sliderRef.current.getBoundingClientRect();
-  //     const newPosition = ((e.clientX - rect.left) / rect.width) * (max - min) + min;
-  //     setSliderValue(newPosition);
-  //     setIsDraggingRef(true);
-  //   }
-  // };
 
   // const handleMouseMove = (e: React.MouseEvent) => {
   //   if (isDraggingRef && sliderRef.current) {
@@ -37,10 +27,22 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
   // const handleMouseUp = () => {
   //   setIsDraggingRef(false);
   // };
+
+  const [isDraggingRef, setIsDraggingRef] = useState(false);
   const [thumbWidth, setThumbWidth] = useState(0);
   const [trackWidth, setTrackWidth] = useState(0);
   const sliderThumbRef = React.createRef<HTMLDivElement>();
   const sliderTrackRef = React.createRef<HTMLDivElement>();
+
+  // const handleMouseDown = (e: React.MouseEvent) => {
+  //   if (sliderTrackRef.current) {
+  //     const rect = sliderTrackRef.current.getBoundingClientRect();
+  //     console.log(e.clientX);
+  //     const newPosition = ((e.clientX - rect.left) / rect.width) * (max - min) + min;
+  //     onChange(newPosition);
+  //     setIsDraggingRef(true);
+  //   }
+  // };
 
   useEffect(() => {
     if (sliderThumbRef.current && sliderTrackRef.current) {
@@ -64,7 +66,7 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
             className='slider-thumb'
             ref={sliderThumbRef}
             style={{
-              left: `${((value - min) / (max - min + value * (thumbWidth / (trackWidth - thumbWidth)))) * 100}%`,
+              left: `${(1 - thumbWidth / trackWidth) * (((value - min) / (max - min)) * 100)}%`,
             }}
           >
             <div className='slider-value'>

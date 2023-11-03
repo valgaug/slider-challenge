@@ -1,12 +1,11 @@
 .slider {
   display: flex;
   flex-direction: column;
-  width: 500px;
   padding-right: 40px;
 }
 
 .slider-container {
-  width: 100%;
+  width: 350px;
   height: 18px;
   position: relative;
   margin: 10px 0;
@@ -14,14 +13,10 @@
 }
 
 .slider-track {
-  /* width: 100%; */
   height: inherit;
-  /* position: absolute; */
-  /* top: 50%; */
   border-radius: 9px;
   outline: grey 1px solid;
   background-image: linear-gradient(rgb(165, 163, 163), rgb(252, 252, 250));
-  /* transform: translateY(-50%); */
 }
 
 .slider-thumb {
@@ -34,8 +29,6 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  /* transform: translateY(-50%); */
-  /* transition: background-color 0.3s; */
 }
 
 .slider-value {
