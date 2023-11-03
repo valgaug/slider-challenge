@@ -20,23 +20,23 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
 
   const formattedValue = formatNumber(value, step);
   const clampedValue = Math.min(Math.max(formattedValue, min), max);
-  const [isDraggingRef, setIsDraggingRef] = useState(false);
   const [trackWidth, setTrackWidth] = useState(0);
   const [thumbWidth, setThumbWidth] = useState(0);
-  const sliderTrackRef = React.createRef<HTMLDivElement>();
-  const sliderThumbRef = React.createRef<HTMLDivElement>();
+  const isDraggingRef = useRef(false);
+  const sliderTrackRef = useRef<HTMLDivElement | null>(null);
+  const sliderThumbRef = useRef<HTMLDivElement | null>(null);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (sliderTrackRef.current) {
       const rect = sliderTrackRef.current.getBoundingClientRect();
       const newPosition = ((e.clientX - rect.left - thumbWidth / 2) / (rect.width - thumbWidth)) * (max - min) + min;
       onChange(newPosition);
-      setIsDraggingRef(true);
+      isDraggingRef.current = true;
     }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDraggingRef && sliderTrackRef.current) {
+    if (isDraggingRef.current && sliderTrackRef.current) {
       const rect = sliderTrackRef.current.getBoundingClientRect();
       const newPosition = ((e.clientX - rect.left - thumbWidth / 2) / (rect.width - thumbWidth)) * (max - min) + min;
       onChange(newPosition);
@@ -44,12 +44,12 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
   };
 
   const handleMouseUp = () => {
-    setIsDraggingRef(false);
+    isDraggingRef.current = false;
   };
 
   const handleMouseLeave = () => {
-    if (isDraggingRef) {
-      setIsDraggingRef(false);
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
     }
   };
 
