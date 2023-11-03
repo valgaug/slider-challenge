@@ -12,22 +12,6 @@ interface Props {
 }
 
 export function Slider({ label, max, min, step, value, unit, onChange }: Props): ReactElement {
-  // const [sliderValue, setSliderValue] = useState(value);
-  // const sliderRef = React.createRef<HTMLDivElement>();
-
-  // const handleMouseMove = (e: React.MouseEvent) => {
-  //   if (isDraggingRef && sliderRef.current) {
-  //     const rect = sliderRef.current.getBoundingClientRect();
-  //     const newPosition = ((e.clientX - rect.left) / rect.width) * (max - min) + min;
-  //     setSliderValue(newPosition);
-  //     onChange(newPosition);
-  //   }
-  // };
-
-  // const handleMouseUp = () => {
-  //   setIsDraggingRef(false);
-  // };
-
   function formatNumber(number: number, step: number): number {
     const roundedNumber = Math.round(number / step) * step;
     const decimalPlaces = step.toString().split('.')[1]?.length || 0;
@@ -50,6 +34,18 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
     }
   };
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDraggingRef && sliderTrackRef.current) {
+      const rect = sliderTrackRef.current.getBoundingClientRect();
+      const newPosition = ((e.clientX - rect.left) / rect.width) * (max - min) + min;
+      onChange(newPosition);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDraggingRef(false);
+  };
+
   useEffect(() => {
     if (sliderThumbRef.current && sliderTrackRef.current) {
       setThumbWidth(sliderThumbRef.current.getBoundingClientRect().width);
@@ -65,8 +61,8 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
           className='slider-track'
           ref={sliderTrackRef}
           onMouseDown={handleMouseDown}
-          // onMouseMove={handleMouseMove}
-          // onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
         >
           <div
             className='slider-thumb'
