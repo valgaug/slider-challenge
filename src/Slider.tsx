@@ -12,11 +12,11 @@ interface Props {
 }
 
 export function Slider({ label, max, min, step, value, unit, onChange }: Props): ReactElement {
-  function formatNumber(number: number, step: number): number {
+  const formatNumber = (number: number, step: number) => {
     const roundedNumber = Math.round(number / step) * step;
-    const decimalPlaces = step.toString().split('.')[1]?.length || 0;
+    const decimalPlaces = (step.toString().split('.')[1] || '').length;
     return Number(roundedNumber.toFixed(decimalPlaces));
-  }
+  };
 
   const formattedValue = formatNumber(value, step);
   const clampedValue = Math.min(Math.max(formattedValue, min), max);
@@ -26,19 +26,23 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
   const sliderTrackRef = useRef<HTMLDivElement | null>(null);
   const sliderThumbRef = useRef<HTMLDivElement | null>(null);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const calculateNewPosition = (e: React.MouseEvent) => {
     if (sliderTrackRef.current) {
       const rect = sliderTrackRef.current.getBoundingClientRect();
-      const newPosition = ((e.clientX - rect.left - thumbWidth / 2) / (rect.width - thumbWidth)) * (max - min) + min;
-      onChange(newPosition);
-      isDraggingRef.current = true;
+      return ((e.clientX - rect.left - thumbWidth / 2) / (rect.width - thumbWidth)) * (max - min) + min;
     }
+    return 0;
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const newPosition = calculateNewPosition(e);
+    onChange(newPosition);
+    isDraggingRef.current = true;
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDraggingRef.current && sliderTrackRef.current) {
-      const rect = sliderTrackRef.current.getBoundingClientRect();
-      const newPosition = ((e.clientX - rect.left - thumbWidth / 2) / (rect.width - thumbWidth)) * (max - min) + min;
+    if (isDraggingRef.current) {
+      const newPosition = calculateNewPosition(e);
       onChange(newPosition);
     }
   };
