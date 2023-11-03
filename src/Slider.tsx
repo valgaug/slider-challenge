@@ -20,10 +20,10 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
 
   const formattedValue = formatNumber(value, step);
   const [isDraggingRef, setIsDraggingRef] = useState(false);
-  const [thumbWidth, setThumbWidth] = useState(0);
   const [trackWidth, setTrackWidth] = useState(0);
-  const sliderThumbRef = React.createRef<HTMLDivElement>();
+  const [thumbWidth, setThumbWidth] = useState(0);
   const sliderTrackRef = React.createRef<HTMLDivElement>();
+  const sliderThumbRef = React.createRef<HTMLDivElement>();
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (sliderTrackRef.current) {
@@ -46,6 +46,12 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
     setIsDraggingRef(false);
   };
 
+  const handleMouseLeave = () => {
+    if (isDraggingRef) {
+      setIsDraggingRef(false);
+    }
+  };
+
   useEffect(() => {
     if (sliderThumbRef.current && sliderTrackRef.current) {
       setThumbWidth(sliderThumbRef.current.getBoundingClientRect().width);
@@ -63,6 +69,7 @@ export function Slider({ label, max, min, step, value, unit, onChange }: Props):
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
         >
           <div
             className='slider-thumb'
